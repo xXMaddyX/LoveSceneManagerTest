@@ -35,7 +35,6 @@ end
 
 function World:draw()
     love.graphics.setColor(1, 1, 1)
-    
     -- Drawing top bound
     love.graphics.polygon("line", self.top.body:getWorldPoints(self.top.shape:getPoints()))
     -- Drawing left bound
