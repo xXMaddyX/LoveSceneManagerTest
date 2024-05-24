@@ -9,13 +9,13 @@ function Player.new()
     instance.y = 100
     instance.scale = 2
     instance.animationSpeed = 10
-    instance:newAnimation(288, 128, 12)
+    instance:newAnimation(love.graphics.newImage(KEY_ELF_SHEET_IDLE),288, 128, 12)
     return instance
 end
 
-function Player:newAnimation(width, height, duration)
+function Player:newAnimation(image, width, height, duration)
     self.animation = {}
-    self.animation.spriteSheet = love.graphics.newImage(KEY_ELF_SHEET_IDLE)
+    self.animation.spriteSheet = image
     self.animation.quads = {}
     local imageWidth = self.animation.spriteSheet:getWidth()
     local imageHeight = self.animation.spriteSheet:getHeight()
