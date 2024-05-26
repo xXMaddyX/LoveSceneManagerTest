@@ -22,7 +22,8 @@ function Player:initAnimation()
     self.RunAnimRight:createAnim("Elf-Run-right", KEY_ELF_SHEET_RUN, 288, 128, 1, 20, 2, 2)
 
     self.RunAnimLeft = AnimationManager.new(self.x, self.y)
-    self.RunAnimLeft:createAnim("Elf-Run-left", KEY_ELF_SHEET_RUN, 288, 128, 1, 20, -2, 2)
+    self.RunAnimLeft:createAnim("Elf-Run-left", KEY_ELF_SHEET_RUN, 288, 128, 1, 20, 2, 2)
+    self.RunAnimLeft:FlipX(true)
 end
 
 function Player:update(dt)

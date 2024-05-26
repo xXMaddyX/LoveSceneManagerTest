@@ -5,6 +5,8 @@ function AnimationManager.new(x, y)
     local instance = setmetatable({}, AnimationManager)
     instance.x = x
     instance.y = y
+    instance.flipX = false
+    instance.flipY = false
     instance.scaleX = 1
     instance.scaleY = 1
     instance.animationSpeed = 1
@@ -14,6 +16,15 @@ end
 function AnimationManager:SetXY(x, y)
     self.x = x
     self.y = y
+end
+
+function AnimationManager:FlipX(bool)
+    if not bool then
+        self.animation.scaleX = self.animation.scaleX
+    end
+    if bool then
+        self.animation.scaleX = -self.animation.scaleX
+    end
 end
 
 function AnimationManager:createAnim(animKey, spriteSheet, width, height, duration, speed, scaleX, scaleY)
@@ -29,6 +40,8 @@ function AnimationManager:createAnim(animKey, spriteSheet, width, height, durati
             table.insert(self.animation.quads, love.graphics.newQuad(x, y, width, height, imageWidth, imageHeight))
         end
     end
+    self.animation.width = width
+    self.animation.height = height
     self.animation.speed = speed
     self.animation.scaleX = scaleX
     self.animation.scaleY = scaleY
@@ -37,6 +50,7 @@ function AnimationManager:createAnim(animKey, spriteSheet, width, height, durati
 end
 
 function AnimationManager:update(dt)
+
     self.animation.currentTime = self.animation.currentTime + dt * self.animationSpeed
     if self.animation.currentTime >= self.animation.duration then
         self.animation.currentTime = self.animation.currentTime - self.animation.duration
