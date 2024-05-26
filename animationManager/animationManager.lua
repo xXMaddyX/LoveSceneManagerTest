@@ -1,20 +1,24 @@
--- AnimationManager.lua
 local AnimationManager = {}
 AnimationManager.__index = AnimationManager
 
-function AnimationManager.new()
+function AnimationManager.new(x, y)
     local instance = setmetatable({}, AnimationManager)
-    instance.x = 0
-    instance.y = 0
+    instance.x = x
+    instance.y = y
     instance.scale = 1
     instance.animationSpeed = 1
     return instance
 end
 
-function AnimationManager:createAnim(animKey, spriteSheet, width, height, duration)
+function AnimationManager:SetXY(x, y)
+    self.x = x
+    self.y = y
+end
+
+function AnimationManager:createAnim(animKey, spriteSheet, width, height, duration, speed, scale)
     self.animation = {}
     self.animation.key = animKey
-    self.animation.spriteSheet = spriteSheet
+    self.animation.spriteSheet = love.graphics.newImage(spriteSheet)
     self.animation.quads = {}
     local imageWidth = self.animation.spriteSheet:getWidth()
     local imageHeight = self.animation.spriteSheet:getHeight()
@@ -24,7 +28,8 @@ function AnimationManager:createAnim(animKey, spriteSheet, width, height, durati
             table.insert(self.animation.quads, love.graphics.newQuad(x, y, width, height, imageWidth, imageHeight))
         end
     end
-
+    self.animation.speed = speed
+    self.animation.scale = scale
     self.animation.duration = duration
     self.animation.currentTime = 0
 end
@@ -38,7 +43,8 @@ end
 
 function AnimationManager:draw()
     local spriteNum = math.floor(self.animation.currentTime / self.animation.duration * #self.animation.quads) + 1
-    love.graphics.draw(self.animation.spriteSheet, self.animation.quads[spriteNum], self.x, self.y, 0, self.scale, self.scale)
+    love.graphics.draw(self.animation.spriteSheet, self.animation.quads[spriteNum], self.x, self.y, 0, self.animation.scale, self.animation.scale)
 end
 
 return AnimationManager
+
